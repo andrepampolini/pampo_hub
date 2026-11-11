@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#078da4">
+  <meta name="description" content="Pampo Controle Financeiro pessoal">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+  <title>Pampo Controle Financeiro</title>
+</head>
+<body>
+<div id="app">
+  <header class="topbar"><a href="../index.html" style="text-decoration:none;background:#e8f8fa;color:#078da4;border-radius:10px;padding:9px;font-size:12px;font-weight:900;white-space:nowrap">← Tela principal</a>
+    <div>
+      <div class="hello">Bom dia, <b id="helloName">Andre</b> 👋</div>
+      <div class="muted">Seu controle financeiro · Pampo Print 3D</div>
+    </div>
+    <button class="iconbtn" data-view="config">⚙️</button>
+  </header>
+
+  <div class="monthbar">
+    <button class="month-arrow" id="prevMonth">‹</button>
+    <strong id="monthTitle"></strong>
+    <button class="month-arrow" id="nextMonth">›</button>
+  </div>
+
+  <main id="content"></main>
+
+  <nav class="bottomnav">
+    <button data-view="home" class="active">🏠<span>Início</span></button>
+    <button data-view="launch">➕<span>Lançar</span></button>
+    <button data-view="history">📊<span>Histórico</span></button>
+    <button data-view="config">⚙️<span>Config.</span></button>
+  </nav>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="sheet">
+    <div class="sheet-head"><h2 id="modalTitle">Novo lançamento</h2><button id="closeModal">×</button></div>
+    <form id="entryForm">
+      <input type="hidden" id="entryType">
+      <label>Data<input id="fDate" type="date" required></label>
+      <label>Descrição<input id="fDesc" placeholder="Ex.: Mercado" required></label>
+      <label id="categoryWrap">Categoria<select id="fCategory"></select></label>
+      <label id="reserveWrap" class="hidden">Tipo de reserva (use “Resgate” para retirar valor reservado)<select id="fReserve"></select></label>
+      <label>Valor<input id="fAmount" inputmode="decimal" placeholder="R$ 0,00" required></label>
+      <button class="primary" type="submit">Salvar lançamento</button>
+    </form>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "Pampo Controle Financeiro",
+  "short_name": "Pampo Finanças",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f6f8",
+  "theme_color": "#202633",
+  "lang": "pt-BR",
+  "description": "Controle financeiro pessoal com entradas, despesas, lazer, reservas e análise 50/30/20.",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#123047">
+  <meta name="description" content="Calculadora de custos e precificação de impressão 3D da Pampo Print 3D.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>Pampo Print 3D | Custos & Precificação</title>
+</head>
+<body>
+  <header class="topbar"><a href="../index.html" style="text-decoration:none;background:#e8f8fa;color:#078da4;border-radius:10px;padding:9px;font-size:12px;font-weight:900;white-space:nowrap">← Tela principal</a>
+    <div class="brand">
+      <h1>Pampo Print 3D</h1>
+      <p>Custos & precificação</p>
+    </div>
+    <button id="installBtn" class="install-btn hidden" type="button">Instalar app</button>
+  </header>
+
+  <main>
+
+    <nav class="tabs" aria-label="Navegação principal">
+      <button class="tab active" data-tab="cotacao">Nova cotação</button>
+      <button class="tab" data-tab="historico">Histórico <span id="historyCount" class="count">0</span></button>
+      <button class="tab" data-tab="ajustes">Configurações</button>
+    </nav>
+
+    <section id="cotacao" class="panel">
+      <div class="section-heading">
+        <div><p class="eyebrow">01 / PRODUTO</p><h3>Dados da impressão</h3></div>
+        <span class="step-icon">▦</span>
+      </div>
+      <label for="clientName">Nome do cliente (opcional)</label>
+      <input id="clientName" placeholder="Ex.: Maria Silva" autocomplete="off">
+      <label for="productName">Descrição do produto</label>
+      <input id="productName" placeholder="Ex.: Pote com funil para Whey" autocomplete="off">
+
+      <div class="field-grid">
+        <div><label for="grams">Filamento usado (g)</label><input id="grams" type="number" min="0" step="0.1" inputmode="decimal" placeholder="63"></div>
+        <div><label for="hours">Duração (horas)</label><input id="hours" type="number" min="0" step="0.1" inputmode="decimal" placeholder="3"></div>
+      </div>
+
+      <div class="section-heading compact">
+        <div><p class="eyebrow">02 / CUSTOS</p><h3>Detalhamento</h3></div>
+      </div>
+      <div class="cost-list">
+        <div class="cost-row"><div><b>Filamento</b><small id="filamentFormula">R$ 148,00/kg × gramas ÷ 1.000</small></div><strong id="filamentCost">R$ 0,00</strong></div>
+        <div class="cost-row"><div><b>Energia elétrica</b><small id="energyFormula">230 W · 0,3 kWh</small></div><strong id="energyCost">R$ 0,00</strong></div>
+        <div class="cost-row"><div><b>Hora de impressão</b><small>Opcional: desgaste/manutenção</small></div><strong id="machineCost">R$ 0,00</strong></div>
+      </div>
+      <label class="check-row"><input type="checkbox" id="includeHour"> Incluir custo por hora no custo bruto</label>
+      <div class="gross-total"><span>Custo bruto de produção</span><strong id="grossCost">R$ 0,00</strong></div>
+
+      <div class="section-heading compact">
+        <div><p class="eyebrow">03 / VENDA</p><h3>Formação do preço</h3></div>
+      </div>
+      <div class="field-grid">
+        <div><label for="packaging">Embalagem (R$)</label><input id="packaging" type="number" min="0" step="0.01" inputmode="decimal" value="0"></div>
+        <div><label for="shipping">Frete (R$)</label><input id="shipping" type="number" min="0" step="0.01" inputmode="decimal" value="0"></div>
+      </div>
+      <div class="total-line"><span>Custo bruto total</span><strong id="totalCost">R$ 0,00</strong></div>
+
+      <div class="margin-heading"><label for="margin">Margem de lucro desejada</label><strong><span id="marginValue">30</span>%</strong></div>
+      <input id="margin" class="range" type="range" min="0" max="80" step="1" value="30">
+      <div class="range-labels"><span>0%</span><span>40%</span><span>80%</span></div>
+      <div class="field-grid margin-input-row">
+        <div><label for="marginNumber">Ajustar margem (%)</label><input id="marginNumber" type="number" min="0" max="99.9" step="0.1" value="30" inputmode="decimal"></div>
+        <div class="margin-note">Margem calculada sobre o preço de venda, não como acréscimo sobre o custo.</div>
+      </div>
+
+      <div class="result-card">
+        <p>PREÇO SUGERIDO DE VENDA</p>
+        <strong id="suggestedPrice">R$ 0,00</strong>
+        <div class="result-divider"></div>
+        <div class="result-bottom"><span>Lucro estimado por unidade</span><b id="estimatedProfit">R$ 0,00</b></div>
+        <small id="resultNote">Antes de impostos, taxas e comissões não informados.</small>
+      </div>
+
+      <div class="button-row">
+        <button id="saveQuote" class="primary-btn">Salvar cotação</button>
+        <button id="copyQuote" class="secondary-btn">Copiar resumo</button>
+        
+      </div>
+      <button id="clearForm" class="text-btn">Limpar produto</button>
+      <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="historico" class="panel hidden">
+      <div class="section-heading"><div><p class="eyebrow">SUAS COTAÇÕES</p><h3>Histórico salvo</h3></div></div>
+      <p class="muted">As cotações ficam armazenadas neste dispositivo, sem conta e sem envio para servidores.</p>
+      <div id="historyList" class="history-list"></div>
+      <button id="exportCsv" class="secondary-btn full">Exportar histórico (CSV)</button>
+      <button id="deleteHistory" class="text-btn danger">Apagar todo o histórico</button>
+    </section>
+
+    <section id="ajustes" class="panel hidden">
+      <div class="section-heading"><div><p class="eyebrow">PADRÕES DA EMPRESA</p><h3>Configurações</h3></div></div>
+      <p class="muted">Esses valores serão usados automaticamente nas próximas cotações.</p>
+      <label for="filamentPrice">Preço do filamento (R$/kg)</label><input id="filamentPrice" type="number" min="0" step="0.01" value="148" inputmode="decimal">
+      <label for="material">Material</label>
+      <select id="material"><option>PLA</option><option>PETG</option><option>ABS</option><option>TPU</option><option>Outro</option></select>
+      <label for="energyRate">Tarifa de energia (R$/kWh)</label><input id="energyRate" type="number" min="0" step="0.001" value="0.3" inputmode="decimal">
+      <label for="printerPower">Consumo da impressora (W)</label><input id="printerPower" type="number" min="0" step="1" value="230" inputmode="decimal">
+      <label for="hourRate">Custo da hora de impressão (R$/h)</label><input id="hourRate" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+      <button id="saveSettings" class="primary-btn full">Salvar configurações</button>
+      <div class="privacy-note"><b>Seus dados são locais.</b><br>Não há login nem sincronização em nuvem. Limpar os dados do navegador pode apagar o histórico. Use “Exportar histórico” para manter uma cópia.</div>
+    </section>
+  </main>
+
+  <footer><span class="footer-mark">P3D</span><span>Feito para a rotina da Pampo Print 3D</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>

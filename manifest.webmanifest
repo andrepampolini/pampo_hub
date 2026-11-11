@@ -1,0 +1,22 @@
+{
+  "name": "Pampo Print 3D - Central de Gestão",
+  "short_name": "Pampo 3D",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4fbfc",
+  "theme_color": "#078da4",
+  "icons": [
+    {
+      "src": "precificacao/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "precificacao/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
